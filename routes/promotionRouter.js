@@ -13,7 +13,7 @@ promotionRouter
 			})
 			.catch((err) => next(err));
 	})
-	.post((req, res, next) => {
+	.post(auth.verifyUser, auth.verifyPartner, (req, res, next) => {
 		Promotion.create(req.body)
 			.then((promotion) => {
 				console.log('promotion Created', promotion);
@@ -27,7 +27,7 @@ promotionRouter
 		res.statusCode = 403;
 		res.end('PUT operation not supported on /promotions');
 	})
-	.delete((req, res, next) => {
+	.delete(auth.verifyUser, auth.verifyPartner, (req, res, next) => {
 		Promotion.deleteMany()
 			.then((response) => {
 				res.statusCode = 200;
@@ -75,7 +75,7 @@ promotionRouter
 			})
 			.catch((err) => next(err));
 	})
-	.put((req, res, next) => {
+	.put(auth.verifyUser, auth.verifyPartner, (req, res, next) => {
 		Promotion.findByIdAndUpdate(
 			req.params.promotionId,
 			{
@@ -90,7 +90,7 @@ promotionRouter
 			})
 			.catch((err) => next(err));
 	})
-	.delete((req, res, next) => {
+	.delete(auth.verifyUser, auth.verifyPartner, (req, res, next) => {
 		Promotion.findByIdAndDelete(req.params.promotionId)
 			.then((response) => {
 				res.statusCode = 200;
